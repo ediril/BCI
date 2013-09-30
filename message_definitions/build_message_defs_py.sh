@@ -1,0 +1,1 @@
+python $DRAGONFLY/tools/build_python_message_defs.py Dragonfly_config.h

@@ -1,0 +1,1 @@
+start "" "%DRAGONFLY%/bin/QuickLogger.exe"

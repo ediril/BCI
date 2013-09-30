@@ -1,0 +1,1 @@
+start python "%BCI_MODULES%/ApplicationControl/app_starter.py"

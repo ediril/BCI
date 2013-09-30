@@ -1,0 +1,6 @@
+function [C, out_command] = EvaluateControlLaw( C, in_command, feedback, dt)
+
+    [C.hand_controller, out_command] = ...
+        feval( ['Evaluate_' C.config.hand.algorithm], ...
+        C.hand_controller, in_command, feedback, dt);
+    
