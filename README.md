@@ -1,6 +1,6 @@
 
 This repo provides several software modules you can use to setup your own BCI experiments.
-We use these modules in our own experimental setups at [Motorlab]() and we are releasing them so you 
+We use these modules in our own experimental setups at [Motorlab](http://schwartzlab.neurobio.pitt.edu) and we are releasing them so you 
 can get a head start and not have to build your own modules from scratch which would take a long time.
 
 ## Prerequisites
