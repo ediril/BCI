@@ -408,7 +408,9 @@ def stop_modules(dragonfly):
 def kill_modules():
     os_name = platform.system()
     if os_name == "Linux":
-        pid.kill_all()
+        import pwd
+        username = pwd.getpwuid( os.getuid() )[0]
+        pid.kill_all(username=username)
 
 
 def write_last(app, last_file=LAST_FILE):

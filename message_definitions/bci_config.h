@@ -17,6 +17,7 @@
 #define MID_VIRTUAL_FIXTURING       28
 #define MID_CANNED_MOVEMENT         27
 #define MID_HAND_VIZ                30
+#define MID_IDLE_MONKEY             36
 #define MID_CALIBRATION             37
 #define MID_SSH_CONTROLLER          35
 #define MID_IDLE_DETECTOR           38
