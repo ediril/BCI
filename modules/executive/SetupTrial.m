@@ -61,7 +61,13 @@ function SetupTrial()
         %--- Start a new rep if there are no targets left to be tried
         if( isempty( XM.combos_to_be_tried))
             % Reset targets
-            num_combos = length(XM.config.task_state_config.target_configurations.combos.home);
+            if isfield(XM.config.task_state_config, 'present_target'), target_str = 'present_target';
+            elseif isfield(XM.config.task_state_config, 'reach_target'), target_str = 'reach_target';
+            end
+            
+            targets = unique(XM.config.task_state_config.(target_str));
+            targets(strcmp(targets, '-')) = [];
+            num_combos = length(XM.config.task_state_config.target_configurations.combos.(targets{1}));
             XM.combos_to_be_tried = 1 : num_combos;
             XM.num_times_tried_combo = zeros( 1, num_combos);
         end
