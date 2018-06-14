@@ -27,8 +27,6 @@ function LoadTaskStateConfigFile( FileName)
                                                                         'timeout,' ...
                                                                         'timeout_range_percent,' ...
                                                                         'timed_out_conseq,' ...
-                                                                        'reach_target,' ...
-                                                                        'use_for_calibration,', ...
                                                                         'dim_domains,' ...
                                                                         'auto_command_fraction,' ...
                                                                         'vf_orth_impedance'] });
@@ -38,9 +36,11 @@ function LoadTaskStateConfigFile( FileName)
     % have so many rows in config file - they're always kept the same anyway
     max_control_dims = length(XM.config.robot_control_dims);
 
-    num_use_for_calibration_rows = size(c.task_state_config.use_for_calibration, 1);
-    if num_use_for_calibration_rows == 1
-        c.task_state_config.use_for_calibration = repmat(c.task_state_config.use_for_calibration, [max_control_dims, 1]);
+    if isfield(c.task_state_config, 'use_for_calibration')
+        num_use_for_calibration_rows = size(c.task_state_config.use_for_calibration, 1);
+        if num_use_for_calibration_rows == 1
+            c.task_state_config.use_for_calibration = repmat(c.task_state_config.use_for_calibration, [max_control_dims, 1]);
+        end
     end
 
     row_cnt = length(c.task_state_config.dim_domains);
@@ -113,22 +113,23 @@ function LoadTaskStateConfigFile( FileName)
     end
     c = LoadValidateConfigFile(config_file_path, fields_to_check);
 
-
     % Check reach_target configs
-    reach_targets = unique(XM.config.task_state_config.reach_target);
-    reach_targets(~cellfun(@isempty,strfind(reach_targets, '-'))) = [];
-    for t = 1 : length(reach_targets)
-        tgt = reach_targets{t};
-        tgt_cfg = sprintf('config_%s', tgt);
-        if ( size(c.target_configurations.(tgt_cfg).targets, 1) > 1)
-            if ~isfield(c.target_configurations.combos, tgt)
-                error(['ERROR: Missing "' tgt '" field in target_configurations.combos']);
-            end
+    if isfield(XM.config.task_state_config, 'reach_target')
+        reach_targets = unique(XM.config.task_state_config.reach_target);
+        reach_targets(~cellfun(@isempty,strfind(reach_targets, '-'))) = [];
+        for t = 1 : length(reach_targets)
+            tgt = reach_targets{t};
+            tgt_cfg = sprintf('config_%s', tgt);
+            if ( size(c.target_configurations.(tgt_cfg).targets, 1) > 1)
+                if ~isfield(c.target_configurations.combos, tgt)
+                    error(['ERROR: Missing "' tgt '" field in target_configurations.combos']);
+                end
 
-            % Check combo indexes
-            ids = unique(c.target_configurations.combos.(tgt));
-            if (min(ids) < 1) || (max(ids) > size(c.target_configurations.(tgt_cfg).targets, 1))
-                error(['ERROR: Invalid index fount at "' tgt '" field in c.target_configurations.combos']);
+                % Check combo indexes
+                ids = unique(c.target_configurations.combos.(tgt));
+                if (min(ids) < 1) || (max(ids) > size(c.target_configurations.(tgt_cfg).targets, 1))
+                    error(['ERROR: Invalid index fount at "' tgt '" field in c.target_configurations.combos']);
+                end
             end
         end
     end
