@@ -2,9 +2,9 @@ import sys
 import os
 import wx
 import re
-from enthought.traits.api import Str, HasTraits, DelegatesTo, List, This, \
+from traits.api import Str, HasTraits, DelegatesTo, List, This, \
                                 Dict, Any, Instance, Enum
-from enthought.traits.ui.api import View, Item, TreeEditor, TreeNode, Group
+from traitsui.api import View, Item, TreeEditor, TreeNode, Group
 import subprocess
 from argparse import ArgumentParser
 from ConfigParser import SafeConfigParser
@@ -232,6 +232,6 @@ if __name__ == "__main__":
                   #'PVA'    : args.pva_file_name,
                   'appman' : args.appman_file_name}
 
-    app = wx.PySimpleApp()
+    app = wx.App(False)
     frame = MainWindow(None, wx.ID_ANY, args.config_dir, args.session, root_files)
     app.MainLoop()
