@@ -142,6 +142,8 @@ def _detect_type(module_file, fail_hard=False):
         return 'python'
     elif ext == '.m':
         return 'MATLAB'
+    elif ext == '.exe':
+        return 'exe'
     elif ext == '':
         return 'exe'
     else:
@@ -247,12 +249,12 @@ def _compose_line(module, app, config):
             cmd = 'start'
             if use_screen == True:
                 cmd += ' /MIN '
-            cmdline_items = [killtag, cmd, mtype, '"%s"' % full_mfile, '"%s"' % conf_file, server]
+            cmdline_items = [killtag, cmd, "python", '"%s"' % full_mfile, '"%s"' % conf_file, server]
 
         else:
-            cmdline_items = [killtag, mtype, full_mfile, conf_file, server]
+            cmdline_items = [killtag, "python", full_mfile, conf_file, server]
         
-    if mtype == 'MATLAB':
+    elif mtype == 'MATLAB':
         if os_name == "Windows":
             cd = 'cd /D "%s" && ' % directory
         else:
@@ -264,7 +266,7 @@ def _compose_line(module, app, config):
 
         if os_name == "Windows":
         
-            cmd = 'start matlab -nosplash'
+            cmd = 'start matlab -nosplash -nodesktop'
             if use_screen == True:
                 cmd += ' -minimize'
         
@@ -272,8 +274,22 @@ def _compose_line(module, app, config):
         else:
             cmdline_items = [cd, matlab_env, killtag, 'matlab-shell', mline]
 
-    if mtype == 'exe':
-        cmdline_items = [killtag, module, conf_file, server]
+    elif mtype == 'exe':
+
+        if os_name == "Windows":
+            full_mfile = os.path.join(directory, mfile)
+
+            cmd = 'start'
+            if use_screen == True:
+                cmd += ' /MIN '
+
+            if conf_file.lower() == "none":
+                conf_file = ""
+
+            cmdline_items = [killtag, cmd, '"%s"' % mfile, '"%s"' % full_mfile, '"%s"' % conf_file, server]
+    
+        else:
+            cmdline_items = [killtag, module, conf_file, server]
 
     cmdline = ' '.join(cmdline_items)
 
