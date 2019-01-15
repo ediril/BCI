@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 #include "Dragonfly.h"
-#include "vr_config.h"
+#include "bci_config.h"
 
 //static RTMA_Module rtma( MID_TEST_MOD, 0);
 static Dragonfly_Module dragonfly( MID_TEST_MOD, 0);
