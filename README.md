@@ -7,9 +7,7 @@ can get a head start and not have to build your own modules from scratch which w
 
 1. Install [Dragonfly](https://github.com/dragonfly-msg/dragonfly)
 
-2. Several of the python modules require `numpy`, `scipy`, `matplotlib` and `traits`. The easist way to get these 
-modules is to install Enthought's EPD_Free. You can find an installer for your operating system [here](https://www.enthought.com/repo/free/)
-(Note: EPD Free has been replaced with Canopy Express. It may work but we haven't switched to using it officially yet)
+2. Several of the python modules require `numpy`, `scipy`, `matplotlib`, `traits`, `traitsui`, `pyface` and `wxPython`
 
 3. Install `PyQt` from [here](http://www.riverbankcomputing.com/software/pyqt/download). 
 You need py2.7 version and make sure you install the one that matches your python build (32-bit or 64-bit)
