@@ -45,7 +45,9 @@ function [Log, IncrState] = RemoveOrphanSamples( Log, IncrState, ETS_id)
                 MsgData = Log.(TopLevelFieldName).(MessageType);
                 [RemainingData, RemovedData] = AdjustField( MsgData, SampleRemoveCount, endvalidmask);
                 Log.(TopLevelFieldName).(MessageType) = RemainingData;
-                IncrState.OrphanSamples.(TopLevelFieldName).(MessageType) = RemovedData;
+                if ~strcmp(TopLevelFieldName, 'ValidSampleMask')
+                    IncrState.OrphanSamples.(TopLevelFieldName).(MessageType) = RemovedData;
+                end
             end
         end
         

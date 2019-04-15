@@ -14,11 +14,11 @@ import re
 import wx
 import platform
 
-from enthought.traits.api import HasTraits, Bool, Enum, Float, Str, List, File, \
+from traits.api import HasTraits, Bool, Enum, Float, Str, List, File, \
      Button, String, Instance
-from enthought.traits.ui.api import Handler, View, Item, UItem, StatusItem, \
+from traitsui.api import Handler, View, Item, UItem, StatusItem, \
      Group, HGroup, VGroup, spring, EnumEditor, ButtonEditor, TextEditor, InstanceEditor
-from enthought.traits.ui.wx.animated_gif_editor import AnimatedGIFEditor
+from traitsui.wx.animated_gif_editor import AnimatedGIFEditor
 from output_stream import OutputStream
 
 
@@ -614,7 +614,7 @@ class SessionManager(HasTraits):
                     # ------------------------------------------------------------------------
                     self.update_status("Pinging modules..")
 
-                    num_retries = 30
+                    num_retries = 50
                     self.module_id_list = {};
                     module_list = []
                     for h in hosts.keys():
@@ -801,7 +801,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print("Using MM IP=%s" % (args.mm_ip))
 
-    app = wx.PySimpleApp()
+    app = wx.App(False)
     frame = MainWindow(args.mm_ip)
     app.MainLoop()
 
